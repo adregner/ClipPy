@@ -73,15 +73,15 @@ class ClippyApplication(QtGui.QMainWindow):
         #self.setWindowIcon(QtGui.QIcon('icons/web.png'))
 
         #   buttons
-        #button_add = QtGui.QPushButton('&Add', self)
-        #layout_buttons = QtGui.QHBoxLayout()
-        #layout_buttons.addStretch(1)
-        #layout_buttons.addWidget(button_add)
-        #widget_buttons = QtGui.QWidget()
-        #widget_buttons.setLayout(layout_buttons)
-        #dock_buttons = QtGui.QDockWidget()
-        #dock_buttons.setFeatures(QtGui.QDockWidget.DockWidgetVerticalTitleBar)
-        #dock_buttons.setWidget(widget_buttons)
+        button_add = QtGui.QPushButton('&Add', self)
+        layout_buttons = QtGui.QHBoxLayout()
+        layout_buttons.addStretch(1)
+        layout_buttons.addWidget(button_add)
+        widget_buttons = QtGui.QWidget()
+        widget_buttons.setLayout(layout_buttons)
+        dock_buttons = QtGui.QDockWidget()
+        dock_buttons.setFeatures(QtGui.QDockWidget.DockWidgetVerticalTitleBar)
+        dock_buttons.setWidget(widget_buttons)
 
         #   text boxes
         text_boxes = [QtGui.QTextEdit() for n in xrange(10)]
@@ -103,10 +103,13 @@ class ClippyApplication(QtGui.QMainWindow):
         #layout_parent.addLayout(layout_buttons)
         #self.setLayout(layout_parent)
         self.setCentralWidget(scroll_area)
-        #self.addDockWidget(QtCore.Qt.BottomDockWidgetArea, dock_buttons)
+        self.addDockWidget(QtCore.Qt.BottomDockWidgetArea, dock_buttons)
 
         # events
-        self.connect(button_add, QtCore.SIGNAL('clicked()'), QtGui.qApp, QtCore.SLOT('add_clip()'))
+        self.connect(button_add, QtCore.SIGNAL('clicked()'), self.add_text)
+        
+    def add_text(self):
+        print "added text thing"
 
     def closeEvent(self, event):
         config = ClippyConfig()
