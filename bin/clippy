@@ -62,7 +62,7 @@ class ClippyConfig():
         f.close()
 
 
-class ClippyApplication(QtGui.QWidget):
+class ClippyApplication(QtGui.QMainWindow):
     def __init__(self, parent=None):
         QtGui.QWidget.__init__(self, parent)
 
@@ -73,23 +73,37 @@ class ClippyApplication(QtGui.QWidget):
         #self.setWindowIcon(QtGui.QIcon('icons/web.png'))
 
         #   buttons
-        button_add = QtGui.QPushButton('&Add', self)
-        layout_buttons = QtGui.QHBoxLayout()
-        layout_buttons.addStretch(1)
-        layout_buttons.addWidget(button_add)
+        #button_add = QtGui.QPushButton('&Add', self)
+        #layout_buttons = QtGui.QHBoxLayout()
+        #layout_buttons.addStretch(1)
+        #layout_buttons.addWidget(button_add)
+        #widget_buttons = QtGui.QWidget()
+        #widget_buttons.setLayout(layout_buttons)
+        #dock_buttons = QtGui.QDockWidget()
+        #dock_buttons.setFeatures(QtGui.QDockWidget.DockWidgetVerticalTitleBar)
+        #dock_buttons.setWidget(widget_buttons)
 
         #   text boxes
         text_boxes = [QtGui.QTextEdit() for n in xrange(10)]
-        layout_texts = QtGui.QVBoxLayout()
-        layout_texts.setSpacing(10)
+        layout_texts = QtGui.QGridLayout()
+        layout_texts.setSpacing(3)
         for text_box in text_boxes:
+            text_box.setMaximumHeight(40)
             layout_texts.addWidget(text_box)
 
+        #   scrolling area
+        scroll_widget = QtGui.QWidget()
+        scroll_widget.setLayout(layout_texts)
+        scroll_area = QtGui.QScrollArea()
+        scroll_area.setWidget(scroll_widget)
+
         #   main UI
-        layout_parent = QtGui.QVBoxLayout()
-        layout_parent.addLayout(layout_texts)
-        layout_parent.addLayout(layout_buttons)
-        self.setLayout(layout_parent)
+        #layout_parent = QtGui.QVBoxLayout()
+        #layout_parent.addLayout(scroll_area)
+        #layout_parent.addLayout(layout_buttons)
+        #self.setLayout(layout_parent)
+        self.setCentralWidget(scroll_area)
+        #self.addDockWidget(QtCore.Qt.BottomDockWidgetArea, dock_buttons)
 
         # events
         self.connect(button_add, QtCore.SIGNAL('clicked()'), QtGui.qApp, QtCore.SLOT('add_clip()'))
